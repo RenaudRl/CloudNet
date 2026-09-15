@@ -39,7 +39,9 @@ tasks.shadowJar.configure {
 moduleJson {
   author = "CloudNetService"
   name = "CloudNet-Database-SQL"
-  main = "eu.cloudnetservice.modules.sql.impl.CloudNetSQLModule"
+  // BTC fix (to report upstream): the class is CloudNetSQLDatabaseModule, the PR's module.json
+  // pointed at a non-existent CloudNetSQLModule and the node could not load the module.
+  main = "eu.cloudnetservice.modules.sql.impl.CloudNetSQLDatabaseModule"
   description = "CloudNet extension, which includes the database support for MySQL, MariaDB, PostgreSQL and SQLite."
   minJavaVersionId = JavaVersion.VERSION_11
   runtimeModule = true

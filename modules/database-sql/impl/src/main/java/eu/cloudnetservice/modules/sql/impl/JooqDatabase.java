@@ -60,6 +60,14 @@ public class JooqDatabase extends AbstractDatabase {
     this.dslContext = dslContext;
   }
 
+  // BTC local shim (not upstream): the released RC17 node still declares
+  // LocalDatabase#iterate(BiConsumer) as abstract, while this branch removed it. Without this
+  // method a RC17 node would throw AbstractMethodError the first time that overload is invoked.
+  // No @Override on purpose: the interface of this branch no longer has the method.
+  public void iterate(@NonNull java.util.function.BiConsumer<String, Document> consumer) {
+    this.iterate(consumer, 100);
+  }
+
   @Override
   public @Nullable Map<String, Document> readChunk(long beginIndex, int chunkSize) {
     var chunk = this.dslContext.select(KEY_FIELD, DOCUMENT_FIELD)
